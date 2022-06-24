@@ -3,7 +3,6 @@
 Implementation of the code for reproducing the results of the paper **Fair Generalized Linear Models with a Convex Penalty** published on ICML2022. [[paper](https://icml.cc/Conferences/2022/Schedule?showEvent=17052)/[arxiv](https://arxiv.org/abs/2206.09076)]
 
 ## Requirements
-Note that the following ```git clone``` does not work because there's no repository yet. (try ```git clone https://github.com/hyungrok-do/fglm-cvx-dev``` instead)
 
 You have to use ```pip``` to install the requirements ([```requirements.txt```](requirements.txt)) not ```conda```.
 ```
