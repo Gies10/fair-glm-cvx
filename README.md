@@ -42,7 +42,7 @@ and
 If you are working on a HPC with [```slurm```](https://slurm.schedmd.com/documentation.html), you may use ```sbatch reproduce.s``` (before execute it, you may want to make a dir for the log files: ```mkdir -p ./logs```)
 
 ## Run for a Single Dataset
-You may substitute a dataset's name (see the **Argument** column of the table below) for valid arguments.
+You may substitute a dataset's name (see the **Argument** column of the table below) for ```DATASET```.
 ```
 python experiment.py --dataset DATASET
 ```
