@@ -1,6 +1,6 @@
 # Fair Generalized Linear Models with a Convex Penalty
 
-Implementation of the code for reproducing the results of the paper **Fair Generalized Linear Models with a Convex Penalty** published on ICML2022. [[paper](https://icml.cc/Conferences/2022/Schedule?showEvent=17052)/[arxiv](https://arxiv.org/abs/2206.09076)]
+Implementation of the code for reproducing the results of the paper **Fair Generalized Linear Models with a Convex Penalty** published on ICML2022. [[paper](https://proceedings.mlr.press/v162/do22a.html)/[arxiv](https://arxiv.org/abs/2206.09076)]
 
 ## Requirements
 
@@ -81,24 +81,27 @@ We provide implementations of several linear model-based fair approaches (or the
  |     Fair Empirical Risk Minimization      |           [```LinearFERM```](models/donini.py)            |           [Donini et al., 2018](https://proceedings.neurips.cc/paper/2018/hash/83cdcec08fbf90370fcf53bdd56604ff-Abstract.html) [[code]](https://github.com/jmikko/fair_ERM)            | 
 |            Reductions Approach            |       [```ReductionsApproach```](models/agarwal.py)       | [Agarwal et al., 2018](https://proceedings.mlr.press/v80/agarwal18a.html), [2019](https://proceedings.mlr.press/v97/agarwal19d.html) [[code]](https://github.com/fairlearn/fairlearn)  | 
 | General Fair Empirical Risk Minimization  |          [```GeneralFairERM```](models/oneto.py)          |                                                          [Oneto et al., 2020](https://doi.org/10.1109/IJCNN48605.2020.9206819)                                                          |                                                                                                                    
-|      Fair Generalized Linear Models       |  [```FairGeneralizedLinearModel```](models/fair_glm.py)   |                                                                   [Do et al., 2022](https://arxiv.org/abs/2206.09076)                                                                   | 
+|      Fair Generalized Linear Models       |  [```FairGeneralizedLinearModel```](models/fair_glm.py)   |                                                                   [Do et al., 2022](https://proceedings.mlr.press/v162/do22a.html)                                                                   | 
 
 
 # Citation
 Please cite as:
 
 ``` bibtex
-@InProceedings{do2022fair,
- title = {Fair Generalized Linear Models with a Convex Penalty},
- author = {Do, Hyungrok and Putzel, Preston and Martin, Axel and Smyth, Padhraic and Zhong, Judy},
- booktitle = {Proceedings of the 39th International Conference on Machine Learning},
- pages = {},
- year = {2022},
- editor = {},
- series = {Proceedings of Machine Learning Research},
- month = {17--23 Jul},
- publisher = {PMLR}
+@InProceedings{pmlr-v162-do22a,
+  title     = {Fair Generalized Linear Models with a Convex Penalty},
+  author    = {Do, Hyungrok and Putzel, Preston and Martin, Axel S and Smyth, Padhraic and Zhong, Judy},
+  booktitle = {Proceedings of the 39th International Conference on Machine Learning},
+  pages     = {5286--5308},
+  year      = {2022},
+  editor    = {Chaudhuri, Kamalika and Jegelka, Stefanie and Song, Le and Szepesvari, Csaba and Niu, Gang and Sabato, Sivan},
+  volume    = {162},
+  series    = {Proceedings of Machine Learning Research},
+  month     = {17--23 Jul},
+  publisher = {PMLR},
+  url = 	 {https://proceedings.mlr.press/v162/do22a.html}
 }
+
 ```
  
 
