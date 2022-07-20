@@ -99,7 +99,7 @@ Please cite as:
   series    = {Proceedings of Machine Learning Research},
   month     = {17--23 Jul},
   publisher = {PMLR},
-  url = 	 {https://proceedings.mlr.press/v162/do22a.html}
+  url       = {https://proceedings.mlr.press/v162/do22a.html}
 }
 
 ```
