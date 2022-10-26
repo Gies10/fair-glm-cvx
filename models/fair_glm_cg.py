@@ -207,6 +207,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             conj_old = np.copy(grad_old)
             loss_old = 1e10
             for i in range(self.maxiter):
+                start_time = time()
                 grad = grad_fn(beta)
                 conj = (grad.flatten() - conj_fn(grad.flatten(), grad_old.flatten())*conj_old.flatten()).reshape(p, m-1)
                 cand = [beta - conj * v for v in ls_grid]
