@@ -46,7 +46,7 @@ def get_dataset_by_name(dataset):
     elif dataset == 'student_performance':
         return StudentPerformanceDataset()
     elif dataset == 'parkinsons_updrs':
-        return ParkinsonsUPDRS()
+        return ParkinsonsUPDRSDataset()
     elif dataset == 'compas':
         return COMPASDataset()
     elif dataset == 'hrs':
