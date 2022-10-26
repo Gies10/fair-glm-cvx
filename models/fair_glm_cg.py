@@ -18,7 +18,7 @@ from scipy.special import gammaln
 
 
 def clipped_sigmoid(z, eps=1e-6):
-    return np.clip(sigmoid(z), eps, 1.-eps)
+    return np.clip(sigmoid(z), a_min=eps, a_max=1.-eps)
 
 def clipped_exp(z, eps=10):
     return np.clip(np.exp(z), a_min=None, a_max=eps)
@@ -36,8 +36,8 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             discretization='equal_count',
             max_segments=100,
             fit_intercept=True,
-            maxiter=100,
-            tol=1e-4
+            maxiter=1000,
+            tol=1e-6
             ):
 
         super().__init__(
@@ -108,7 +108,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
 
         self.D_time = time() - D_start
 
-        ls_grid = np.exp(np.linspace(np.log(1e-3), np.log(1e-1), 20))
+        ls_grid = np.exp(np.linspace(np.log(1e-3), np.log(1), 20))
         beta = np.zeros(p)
         time_traj = [0.]
 
@@ -125,7 +125,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 if np.linalg.norm(grad) < self.tol:
                     break
 
-                conj = grad - conj_fn(grad, grad_old)*conj_old
+                conj = grad + conj_fn(grad, grad_old)*conj_old
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
@@ -149,7 +149,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 if np.linalg.norm(grad) < self.tol:
                     break
 
-                conj = grad - conj_fn(grad, grad_old)*conj_old
+                conj = grad + conj_fn(grad, grad_old)*conj_old
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
@@ -172,7 +172,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 grad = grad_fn(beta)
                 if np.linalg.norm(grad) < self.tol:
                     break
-                conj = grad - conj_fn(grad, grad_old)*conj_old
+                conj = grad + conj_fn(grad, grad_old)*conj_old
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
@@ -202,7 +202,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 grad = grad_fn(beta)
                 if np.linalg.norm(grad) < self.tol:
                     break
-                conj = (grad.flatten() - conj_fn(grad.flatten(), grad_old.flatten())*conj_old.flatten()).reshape(p, m-1)
+                conj = (grad.flatten() + conj_fn(grad.flatten(), grad_old.flatten())*conj_old.flatten()).reshape(p, m-1)
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
