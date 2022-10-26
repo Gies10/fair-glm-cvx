@@ -141,7 +141,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             self.classes_ = unique_labels(y)
             def loss_fn(b):
                 mu = clipped_sigmoid(X@b)
-                return -np.mean(y*np.log(mu) + (1.-y)*np.log(1.-mu))
+                return -np.mean(y*np.log(mu) + (1.-y)*np.log(1.-mu)) + .5*b @ D @ b
             grad_fn = lambda b: -X.T @ (y - clipped_sigmoid(X@b)) / n + D @ b
 
             grad_old = grad_fn(beta)
@@ -167,7 +167,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
         elif self.family == 'poisson':
             def loss_fn(b):
                 xb = X@b
-                return -np.mean(y*xb - clipped_exp(xb) - gammaln(y+1))
+                return -np.mean(y*xb - clipped_exp(xb) - gammaln(y+1)) + .5*b @ D @ b
             grad_fn = lambda b: -X.T @ (y - clipped_exp(X@b)) / n + D @ b
 
             grad_old = grad_fn(beta)
@@ -196,7 +196,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             def loss_fn(b):
                 mu = np.array([np.exp(xb) / (1 + np.exp(xb).sum()) for xb in X @ b])
                 mu = np.clip(mu, 0 + 1e-6, 1 - 1e-6)
-                return -np.mean(y_ * np.log(mu))
+                return -np.mean(y_ * np.log(mu)) + .5*b @ D @ b
             def grad_fn(b):
                 mu = np.array([np.exp(xb) / (1 + np.exp(xb).sum()) for xb in X @ b])
                 mu = np.clip(mu, 0 + 1e-6, 1 - 1e-6)
