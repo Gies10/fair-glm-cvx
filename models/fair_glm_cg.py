@@ -108,17 +108,18 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
 
         self.D_time = time() - D_start
 
-        ls_grid = np.arange(0.1, 1.1, 0.1)
-        beta = np.zeros(0)
+        ls_grid = np.exp(np.linspace(np.log(1e-3), np.log(1e-1), 20))
+        beta = np.zeros(p)
         time_traj = [0.]
 
-        conj_fn = lambda b_n, b_o: b_n @ (b_n - b_o) / (b_o @ b_o)
+        conj_fn = lambda b_n, b_o: np.max([0, b_n @ (b_n - b_o) / np.clip(b_o @ b_o, a_min=1e-4, a_max=None)])
         if self.family == 'normal':
             loss_fn = lambda b: .5*np.square(y - X @ b).mean() + .5*b @ D @ b
             grad_fn = lambda b: -X.T @ (y - X @ b) / n + D @ b
 
             grad_old = grad_fn(beta)
             conj_old = np.copy(grad_old)
+            loss_old = 1e10
             for i in range(self.maxiter):
                 start_time = time()
                 grad = grad_fn(beta)
@@ -126,13 +127,15 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
+                loss = loss_fn(beta)
 
                 time_traj.append(time() - start_time)
-                if np.linalg.norm(grad) < self.tol:
+                if loss > loss_old:
                     break
 
                 grad_old = np.copy(grad)
                 conj_old = np.copy(conj)
+                loss_old = np.copy(loss)
 
         elif self.family == 'bernoulli':
             self.classes_ = unique_labels(y)
@@ -143,6 +146,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
 
             grad_old = grad_fn(beta)
             conj_old = np.copy(grad_old)
+            loss_old = 1e10
             for i in range(self.maxiter):
                 start_time = time()
                 grad = grad_fn(beta)
@@ -150,13 +154,15 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
+                loss = loss_fn(beta)
 
                 time_traj.append(time() - start_time)
-                if np.linalg.norm(grad) < self.tol:
+                if loss > loss_old:
                     break
 
                 grad_old = np.copy(grad)
                 conj_old = np.copy(conj)
+                loss_old = np.copy(loss)
 
         elif self.family == 'poisson':
             def loss_fn(b):
@@ -166,6 +172,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
 
             grad_old = grad_fn(beta)
             conj_old = np.copy(grad_old)
+            loss_old = 1e10
             for i in range(self.maxiter):
                 start_time = time()
                 grad = grad_fn(beta)
@@ -173,13 +180,15 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
+                loss = loss_fn(beta)
 
                 time_traj.append(time() - start_time)
-                if np.linalg.norm(grad) < self.tol:
+                if loss > loss_old:
                     break
 
                 grad_old = np.copy(grad)
                 conj_old = np.copy(conj)
+                loss_old = np.copy(loss)
 
         elif self.family == 'multinomial':
             m = y.shape[1]
@@ -196,19 +205,22 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             beta = np.zeros((p, m-1))
             grad_old = grad_fn(beta)
             conj_old = np.copy(grad_old)
+            loss_old = 1e10
             for i in range(self.maxiter):
                 grad = grad_fn(beta)
                 conj = (grad.flatten() - conj_fn(grad.flatten(), grad_old.flatten())*conj_old.flatten()).reshape(p, m-1)
                 cand = [beta - conj * v for v in ls_grid]
                 ls_min = np.argmin([loss_fn(c) for c in cand])
                 beta = cand[ls_min]
+                loss = loss_fn(beta)
 
                 time_traj.append(time() - start_time)
-                if np.linalg.norm(grad) < self.tol:
+                if loss > loss_old:
                     break
 
                 grad_old = np.copy(grad)
                 conj_old = np.copy(conj)
+                loss_old = np.copy(loss)
 
         self.time_traj = np.cumsum(time_traj)
         self.N_time = self.time_traj[-1]

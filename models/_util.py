@@ -1,7 +1,7 @@
 
 import numpy as np
 from models.agarwal import ReductionsApproach
-from models.fair_glm import FairGeneralizedLinearModel
+from models.fair_glm_cg import FairGeneralizedLinearModel
 from models.donini import LinearFERM
 from models.bechavod import SquaredDifferenceFairLogistic
 from models.zafar import FairnessConstraintModel
