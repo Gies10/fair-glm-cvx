@@ -2,7 +2,7 @@
 output: binary
 
 seed: 0
-num_repeats: 1
+num_repeats: 20
 sensitive_predictor: False
 
 models:
