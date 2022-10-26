@@ -196,7 +196,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
             def loss_fn(b):
                 mu = np.array([np.exp(xb) / (1 + np.exp(xb).sum()) for xb in X @ b])
                 mu = np.clip(mu, 0 + 1e-6, 1 - 1e-6)
-                return -np.mean(y_ * np.log(mu)) + .5*b @ D @ b
+                return -np.sum(y_ * np.log(mu)) / n + .5 * np.sum([b_ @ D @ b_ for b_ in b.T])
             def grad_fn(b):
                 mu = np.array([np.exp(xb) / (1 + np.exp(xb).sum()) for xb in X @ b])
                 mu = np.clip(mu, 0 + 1e-6, 1 - 1e-6)
