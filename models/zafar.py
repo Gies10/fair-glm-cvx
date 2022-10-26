@@ -90,7 +90,7 @@ class FairnessConstraintModel(BaseFairEstimator):
                           feastol=self.eps, reltol=self.eps, feastol_inacc=self.eps, reltol_inacc=self.eps,
                           max_iters=self.max_iters, max_iter=self.max_iter_dccp, solver=cp.ECOS)
 
-            print("Optimization done, problem status:", problem.status)
+            #print("Optimization done, problem status:", problem.status)
             #assert problem.status == "Converged" or problem.status == "optimal"
 
             # check that the fairness constraint is satisfied
@@ -219,7 +219,7 @@ class DisparateMistreatmentModel(BaseFairEstimator):
                           feastol=self.eps, reltol=self.eps, feastol_inacc=self.eps, reltol_inacc=self.eps,
                           max_iters=self.max_iters, max_iter=self.max_iter_dccp, solver=cp.ECOS)
 
-            print("Optimization done, problem status:", problem.status)
+            #print("Optimization done, problem status:", problem.status)
             #assert problem.status == "Converged" or problem.status == "optimal"
 
             # check that the fairness constraint is satisfied
