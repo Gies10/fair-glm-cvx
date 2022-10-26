@@ -140,8 +140,8 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
         elif self.family == 'bernoulli':
             self.classes_ = unique_labels(y)
             def loss_fn(b):
-                mu = clipped_sigmoid(X@b)
-                return -np.mean(y*np.log(mu) + (1.-y)*np.log(1.-mu)) + .5*b @ D @ b
+                xb = X@b
+                return -np.sum(y*xb - np.log(1 + np.exp(xb))) / n + .5*b @ D @ b
             grad_fn = lambda b: -X.T @ (y - clipped_sigmoid(X@b)) / n + D @ b
 
             grad_old = grad_fn(beta)
@@ -167,7 +167,7 @@ class FairGeneralizedLinearModel(BaseFairEstimator):
         elif self.family == 'poisson':
             def loss_fn(b):
                 xb = X@b
-                return -np.mean(y*xb - clipped_exp(xb) - gammaln(y+1)) + .5*b @ D @ b
+                return -np.sum(y*xb - clipped_exp(xb) - gammaln(y+1)) / n + .5*b @ D @ b
             grad_fn = lambda b: -X.T @ (y - clipped_exp(X@b)) / n + D @ b
 
             grad_old = grad_fn(beta)
