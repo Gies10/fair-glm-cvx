@@ -18,7 +18,7 @@ save_path = os.path.join(os.getcwd(), 'results')
 os.makedirs(save_path, exist_ok=True)
 
 parser = ArgumentParser()
-parser.add_argument('--dataset', default='arrhythmia')
+parser.add_argument('--dataset', default='pricingame')
 args = parser.parse_args()
 
 dataset = args.dataset

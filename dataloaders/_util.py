@@ -5,6 +5,7 @@ from dataloaders.german_credit import GermanCreditDataset
 from dataloaders.drug import DrugConsumptionBinaryDataset
 from dataloaders.drug_multi import DrugConsumptionMultiDataset
 from dataloaders.crime import CrimeDataset
+from dataloaders.pricingame import PricinGameDataset
 from dataloaders.student import StudentPerformanceDataset
 from dataloaders.parkinsons_updrs import ParkinsonsUPDRSDataset
 from dataloaders.compas import COMPASDataset
@@ -24,7 +25,8 @@ supported_datasets = [
     'lsac',
     'obesity',
     'parkinsons_updrs',
-    'student_performance'
+    'student_performance',
+    'pricingame'
 ]
 
 
@@ -55,6 +57,8 @@ def get_dataset_by_name(dataset):
         return ObesityDataset()
     elif dataset == 'lsac':
         return LSACDataset()
+    elif dataset == 'pricingame':
+        return PricinGameDataset()
     else:
         raise Exception('How did you end up here?')
 

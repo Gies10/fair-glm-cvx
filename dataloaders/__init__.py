@@ -13,6 +13,7 @@ from dataloaders.compas import COMPASDataset
 from dataloaders.hrs import HRSDataset
 from dataloaders.obesity import ObesityDataset
 from dataloaders.lsac import LSACDataset
+from dataloaders.pricingame import PricinGameDataset
 
 __all__ = [
     'get_dataset_by_name',
@@ -28,6 +29,7 @@ __all__ = [
     'COMPASDataset',
     'HRSDataset',
     'ObesityDataset',
-    'LSACDataset']
+    'LSACDataset',
+    'PricinGameDataset']
 
 
