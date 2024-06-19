@@ -47,7 +47,7 @@ VARIABLES = {
 
 
 class PricinGameDataset(BaseDataset):
-    def __init__(self, download=True, data_dir=None, random_seed=0):
+    def __init__(self, download=False, data_dir=None, random_seed=0):
 
         super().__init__(
             download=download,
@@ -60,15 +60,28 @@ class PricinGameDataset(BaseDataset):
         self.process()
 
     def process(self):
-        data_path = self.data_dir.joinpath('pricingame.data')
+        data_path = self.data_dir.joinpath('pricingame.csv')
 
         self._check_exists_and_download(data_path, DATA_URL, self.download)
         
-        data = pd.read_csv(data_path, sep=',')
+        data = pd.read_csv(data_path, sep=',', index_col=0)
         gender = data[self._sensitive_attr_name]
         target = data['total_claim_amount']
         
-        dat = data.drop([self._sensitive_attr_name, 'total_claim_amount', "pol_insee_code", "vh_make", "vh_model"], axis=1)
+        dat = data.drop([self._sensitive_attr_name, 'total_claim_amount', "pol_insee_code", "vh_make", "vh_model","pol_coverageMaxi", 
+        "pol_coverageMedian1", 
+        "pol_coverageMedian2", 
+        "pol_coverageMini", 
+        "pol_pay_freqMonthly",
+        "pol_pay_freqQuarterly", 
+        "pol_pay_freqYearly", 
+        "pol_paydYes", 
+        "pol_usageProfessional", 
+        "pol_usageRetired",  
+        "pol_usageWorkPrivate",
+        "vh_fuelGasoline",  
+        "vh_fuelHybrid", 
+        "vh_typeTourism",], axis=1)
         
         train_X, test_X, train_A, test_A, train_y, test_y = train_test_split(
             dat, gender, target, test_size=0.3, random_state=self.random_seed)

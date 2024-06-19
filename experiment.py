@@ -45,6 +45,7 @@ results = dict()
 for model in models:
     results[model] = dict()
 
+check = data.train
 for seed in random_seeds:
     data.reset(seed)
     train_y = data.train['target'].values
@@ -54,8 +55,9 @@ for seed in random_seeds:
     test_y = data.test['target'].values
     test_A = data.test[data.sensitive].values
     test_X = data.test.drop(['target', data.sensitive], axis=1).values
-
-    train_X = np.column_stack([train_A, train_X])
+    
+    #train_X = np.column_stack([train_A, train_X])
+    #print(train_X)
     if sensitive_predictor:
         test_X = np.column_stack([test_A, test_X])
 
@@ -88,6 +90,7 @@ for seed in random_seeds:
                     test_y = model._enc.transform(test_y.reshape(-1, 1)) if test_y.ndim == 1 else test_y
                 else:
                     test_p = model.predict(test_X)
+                    print("train:", train_X, "param:", param, "test_p", test_p)
 
                 results[model_name][seed][list(param.values())[0]] = evaluator.evaluate(test_y, test_p, test_A)
 

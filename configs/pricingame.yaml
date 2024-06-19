@@ -2,7 +2,7 @@
 output: continuous
 
 seed: 0
-num_repeats: 20
+num_repeats: 2
 sensitive_predictor: False
 
 models:
