@@ -56,9 +56,10 @@ for seed in random_seeds:
     test_A = data.test[data.sensitive].values
     test_X = data.test.drop(['target', data.sensitive], axis=1).values
     
-    #train_X = np.column_stack([train_A, train_X])
-    #print(train_X)
+    train_X = np.column_stack([train_A, train_X])
+    print(train_X)
     if sensitive_predictor:
+        pass
         test_X = np.column_stack([test_A, test_X])
 
     for model_name, (model_instance, param_grid) in models.items():
@@ -79,6 +80,7 @@ for seed in random_seeds:
             setattr(model, 'penalty', 'group')
 
         for param in param_grid:
+            print(train_X)
             model.set_params(**param)
             model.fit(train_X, train_y)
 

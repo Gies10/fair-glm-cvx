@@ -28,7 +28,7 @@ os.makedirs(save_path, exist_ok=True)
 
 
 discretization = ['equal_length', 'equal_count']
-for dataset in ['crime', 'parkinsons_updrs', 'student_performance']:
+for dataset in ['pricingame']:
     with open(f'configs/{dataset}.yaml', 'rb') as f:
         configs = yaml.safe_load(f)
 
@@ -176,4 +176,5 @@ for dataset in ['crime', 'parkinsons_updrs', 'student_performance']:
             plt.tight_layout()
 
             plt.savefig(os.path.join(save_path, f'discretization+{dataset}+{metric}+{disparity}.pdf'), dpi=200)
+            
             plt.close(fig)

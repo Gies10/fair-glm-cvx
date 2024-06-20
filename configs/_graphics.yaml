@@ -14,6 +14,14 @@ FGLM:
   linestyle: '-'
   linewidth: 0.8
 
+CFGLM:
+  marker: 'X'
+  color: 'green'
+  alpha: 0.6
+  markersize: 9
+  linestyle: '-'
+  linewidth: 0.8
+
 SVM:
   marker: '8'
   color: 'gray'

@@ -10,6 +10,7 @@ from models.berk import ConvexFrameworkModel
 from models.perez import HSICLinearRegression
 from models.oneto import GeneralFairERM
 from models.svm import LinearSVM
+from models.condit_fair_glm import ConditionalFairGeneralizedLinearModel
 from sklearn.model_selection import ParameterGrid
 
 
@@ -34,6 +35,8 @@ def get_model_instance(model):
         return GeneralFairERM
     if model == 'BGL' or model == 'SP':
         return ReductionsApproach
+    if model == 'CFGLM':
+        return ConditionalFairGeneralizedLinearModel
 
 
 def get_parameter_grid(configs):
