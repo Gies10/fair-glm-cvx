@@ -10,4 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "jus
+            "justMyCode": false
+        }
+    ]
+}
