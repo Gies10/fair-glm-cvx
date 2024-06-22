@@ -22,7 +22,7 @@ class ConditionalFairGeneralizedLinearModel(BaseFairEstimator):
             sensitive_predictor=False,
             standardize=False,
             lam=0.,
-            # phi = 0.,
+            phi = 0.,
             family='bernoulli',
             discretization='equal_count',
             max_segments=100,
@@ -38,7 +38,7 @@ class ConditionalFairGeneralizedLinearModel(BaseFairEstimator):
         )
 
         self.lam = lam
-        # self.phi = phi
+        self.phi = phi
         self.maxiter = maxiter
         self.fit_intercept = fit_intercept
         self.tol = tol
@@ -95,7 +95,7 @@ class ConditionalFairGeneralizedLinearModel(BaseFairEstimator):
                 Xay = X[np.logical_and(A == a, YD == yd)]
                 Xby = X[np.logical_and(A == b, YD == yd)]
                 diff = (Xay[None, :, :] - Xby[:, None, :]).reshape(-1, p)
-                d_ij = np.exp(-self.lam * np.linalg.norm(diff[:,2:4], ord=2, axis=1))
+                d_ij = np.exp(-self.phi * np.linalg.norm(diff[:,2:4], ord=2, axis=1))
                 cond_diff = diff * d_ij[:, np.newaxis]
                 # print(d_ij @ (diff.T @ diff))
                 # diff_times_diff = (diff.T @ diff)
@@ -104,8 +104,7 @@ class ConditionalFairGeneralizedLinearModel(BaseFairEstimator):
                 # print((d_ij @ (diff.T @ diff)) / (np.float64(len(Xay)) * np.float64(len(Xby))))
                 D += (cond_diff.T @ cond_diff) / (np.float64(len(Xay)) * np.float64(len(Xby)))
 
-            # D = (self.lam * 2) / (len(set(YD)) * len(set(A)) * (len(set(A)) - 1)) * D
-            D = (2) / (len(set(YD)) * len(set(A)) * (len(set(A)) - 1)) * D
+            D = (self.lam * 2) / (len(set(YD)) * len(set(A)) * (len(set(A)) - 1)) * D
         self.D_time = time() - D_start
 
         beta = [np.zeros(p)]

@@ -37,6 +37,10 @@ def get_model_instance(model):
         return ReductionsApproach
     if model == 'CFGLM':
         return ConditionalFairGeneralizedLinearModel
+    if model == 'CFGLM1':
+        return ConditionalFairGeneralizedLinearModel
+    if model == 'CFGLM2':
+        return ConditionalFairGeneralizedLinearModel
 
 
 def get_parameter_grid(configs):
