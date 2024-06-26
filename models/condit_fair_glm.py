@@ -95,7 +95,7 @@ class ConditionalFairGeneralizedLinearModel(BaseFairEstimator):
                 Xay = X[np.logical_and(A == a, YD == yd)]
                 Xby = X[np.logical_and(A == b, YD == yd)]
                 diff = (Xay[None, :, :] - Xby[:, None, :]).reshape(-1, p)
-                d_ij = np.exp(-self.phi * np.linalg.norm(diff[:,2:4], ord=2, axis=1))
+                d_ij = np.exp(-self.phi * np.linalg.norm(diff, ord=2, axis=1))
                 cond_diff = diff - d_ij[:, np.newaxis]
                 # print(d_ij @ (diff.T @ diff))
                 # diff_times_diff = (diff.T @ diff)
