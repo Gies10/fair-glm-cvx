@@ -22,6 +22,22 @@ CFGLM:
   linestyle: '-'
   linewidth: 0.8
 
+CFGLM1:
+  marker: 'X'
+  color: 'purple'
+  alpha: 0.6
+  markersize: 9
+  linestyle: '-'
+  linewidth: 0.8
+
+CFGLM2:
+  marker: 'X'
+  color: 'orange'
+  alpha: 0.6
+  markersize: 9
+  linestyle: '-'
+  linewidth: 0.8
+
 SVM:
   marker: '8'
   color: 'gray'

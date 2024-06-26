@@ -1,8 +1,8 @@
 
 output: continuous
 
-seed: 0
-num_repeats: 5
+seed: 12
+num_repeats: 10
 sensitive_predictor: False
 
 models:
@@ -17,15 +17,15 @@ models:
   CFGLM:
     param:
       lam: [1e-3, 10., 11]
-      phi: [1e-3, 1e-3, 1]
+      phi: [4, 4, 1]
     log_exp_grid: True
   CFGLM1:
     param:
       lam: [1e-3, 10., 11]
-      phi: [0.1, 0.1, 1]
+      phi: [2., 2., 1]
     log_exp_grid: True
   CFGLM2:
     param:
       lam: [1e-3, 10., 11]
-      phi: [0.2, 0.2, 1]
+      phi: [1e-3, 1e-3, 1]
     log_exp_grid: True

@@ -13,7 +13,7 @@ from util import Evaluator
 from models import define_models
 from dataloaders import get_dataset_by_name
 
-save_path = os.path.join(os.getcwd(), 'results')
+save_path = os.path.join(os.getcwd(), 'results/pricingame')
 os.makedirs(save_path, exist_ok=True)
 
 parser = ArgumentParser()
